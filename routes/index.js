@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 
 
@@ -8,9 +7,11 @@ const mountLoginRoutes = require('../features/login/routes');
 const mountLogoutRoutes = require('../features/logout/routes');
 const mountResetPasswordRoutes = require('../features/reset-password/routes');
 const mountProfileRoutes = require('../features/profile/routes');
+const {showUser} = require('../features/table/commands/showUser');
 
 function isAuthenticated(req, res, next) {
   if (req.user && req.isAuthenticated()) {
+    
     return next();
   }
 
@@ -35,12 +36,13 @@ router.get('/profile', isAuthenticated, (req, res) => {
 });
 
 router.get('/tables', isAuthenticated, (req, res) => {
-  res.render('pages/tables');
+  res.render('pages/tables',{showUser});
 });
 
 router.get('/test', isAuthenticated, (req, res) => {
   res.render('pages/test');
 });
+
 
 mountRegisterRoutes(router);
 mountLoginRoutes(router);
