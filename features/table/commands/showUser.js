@@ -11,4 +11,6 @@ async function showUser(req, res) {
     res.render('pages/tables',{users:users})
 }
 
+
+
 module.exports = showUser;
