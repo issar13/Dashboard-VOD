@@ -7,7 +7,8 @@ const mountLoginRoutes = require('../features/login/routes');
 const mountLogoutRoutes = require('../features/logout/routes');
 const mountResetPasswordRoutes = require('../features/reset-password/routes');
 const mountProfileRoutes = require('../features/profile/routes');
-const {showUser} = require('../features/table/commands/showUser');
+const showUser = require('../features/table/commands/showUser');
+const showDashboard = require('../features/table/commands/countUser');
 
 function isAuthenticated(req, res, next) {
   if (req.user && req.isAuthenticated()) {
@@ -19,13 +20,14 @@ function isAuthenticated(req, res, next) {
 }
 
 /* GET home page. */
-router.get('/', isAuthenticated, (req, res) => {
-  res.render('pages/dashboard');
-});
+router.get('/', isAuthenticated , showDashboard);
 
-router.get('/icons', isAuthenticated, (req, res) => {
+
+
+router.get('/icons', isAuthenticated,(req, res) => {
   res.render('pages/icons');
 });
+
 
 router.get('/maps', isAuthenticated, (req, res) => {
   res.render('pages/maps');
@@ -35,13 +37,13 @@ router.get('/profile', isAuthenticated, (req, res) => {
   res.render('pages/profile');
 });
 
-router.get('/tables', isAuthenticated, (req, res) => {
-  res.render('pages/tables',{showUser});
-});
+router.get('/tables', isAuthenticated, showDashboard);
 
 router.get('/test', isAuthenticated, (req, res) => {
   res.render('pages/test');
 });
+
+
 
 
 mountRegisterRoutes(router);
